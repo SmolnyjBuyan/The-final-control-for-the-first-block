@@ -12,7 +12,7 @@
 
 int GetPositiveInteger()
 {
-    while(true)
+    while (true)
     {
         Console.Write($"Задайте длину массива: ");
         if (int.TryParse(Console.ReadLine(), out int result))
@@ -26,12 +26,46 @@ int GetPositiveInteger()
 
 void PrintArray(string[] array)
 {
-    Console.Write("Введеный массив: [");
-    for (int i = 0; i < array.Length - 1; i++)
+    Console.Write("[");
+    for (int i = 0; i < array.Length; i++)
     {
-        Console.Write($"\"{array[i]}\", ");
+        Console.Write($"\"{array[i]}\"");
+        if (i == array.Length - 1) break;
+        Console.Write(", ");
     }
-    Console.WriteLine($"\"{array[array.Length - 1]}\"]");
+    Console.WriteLine($"]");
 }
 
-PrintArray(CreateArray());
+int GetCountOfShortElements(string[] array)
+{
+    int count = 0;
+    for (int i = 0; i < array.Length; i++)
+    {
+        if (array[i].Length <= 3) count++;
+    }
+    return count;
+}
+
+string[] CreateArrayFromArray(string[] initialArray)
+{
+    string[] resultArray = new string[GetCountOfShortElements(initialArray)];
+    int count = 0;
+    for (int i = 0; i < initialArray.Length; i++)
+    {
+        if (initialArray[i].Length <= 3)
+        {
+            resultArray[count] = initialArray[i];
+            count++;
+        }
+    }
+    return resultArray;
+}
+
+
+string[] initialArray = CreateArray();
+
+Console.Write("Введенный массив: ");
+PrintArray(initialArray);
+
+Console.Write("Сформированный массив: ");
+PrintArray(CreateArrayFromArray(initialArray));
